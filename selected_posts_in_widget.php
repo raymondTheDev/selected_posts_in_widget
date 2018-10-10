@@ -20,24 +20,16 @@ class Selected_Posts_in_Widget extends WP_Widget {
 		);
 	}
 	public function form( $instance ) {
+	    $no_of_defaults_start = 2; //default select start
+        $no_of_defaults_last = 15; //default select end
 		$defaults = array(
 			'title'    => 'Editors Choices',
 			'select'   => '',
-			'select2'   => '02',
-			'select3'   => '03',
-			'select4'   => '04',
-			'select5'   => '05',
-			'select6'   => '06',
-			'select7'   => '07',
-			'select8'   => '08',
-			'select9'   => '09',
-			'select10'   => '10',
-			'select11'   => '11',
-			'select12'   => '12',
-			'select13'   => '13',
-			'select14'   => '14',
-			'select15'   => '15',
 		);
+		/*updated the code to have it looped*/
+		for($x=$no_of_defaults_start;$x<=$no_of_defaults_last;$x++){
+		    $defaults['select'.$x] = str_pad($x, 2, "0", STR_PAD_LEFT);
+        }
 
 		extract( wp_parse_args( ( array ) $instance, $defaults ) ); ?>
 
@@ -204,40 +196,31 @@ class Selected_Posts_in_Widget extends WP_Widget {
 		$instance = $old_instance;
 		$instance['title']    = isset( $new_instance['title'] ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
 		$instance['select']   = isset( $new_instance['select'] ) ? wp_strip_all_tags( $new_instance['select'] ) : '';
-		$instance['select2']   = isset( $new_instance['select2'] ) ? wp_strip_all_tags( $new_instance['select2'] ) : '';
-		$instance['select3']   = isset( $new_instance['select3'] ) ? wp_strip_all_tags( $new_instance['select3'] ) : '';
-		$instance['select4']   = isset( $new_instance['select4'] ) ? wp_strip_all_tags( $new_instance['select4'] ) : '';
-		$instance['select5']   = isset( $new_instance['select5'] ) ? wp_strip_all_tags( $new_instance['select5'] ) : '';
-		$instance['select6']   = isset( $new_instance['select6'] ) ? wp_strip_all_tags( $new_instance['select6'] ) : '';
-		$instance['select7']   = isset( $new_instance['select7'] ) ? wp_strip_all_tags( $new_instance['select7'] ) : '';
-		$instance['select8']   = isset( $new_instance['select8'] ) ? wp_strip_all_tags( $new_instance['select8'] ) : '';
-		$instance['select9']   = isset( $new_instance['select9'] ) ? wp_strip_all_tags( $new_instance['select9'] ) : '';
-		$instance['select10']   = isset( $new_instance['select10'] ) ? wp_strip_all_tags( $new_instance['select10'] ) : '';
-		$instance['select11']   = isset( $new_instance['select11'] ) ? wp_strip_all_tags( $new_instance['select11'] ) : '';
-		$instance['select12']   = isset( $new_instance['select12'] ) ? wp_strip_all_tags( $new_instance['select12'] ) : '';
-		$instance['select13']   = isset( $new_instance['select13'] ) ? wp_strip_all_tags( $new_instance['select13'] ) : '';
-		$instance['select14']   = isset( $new_instance['select14'] ) ? wp_strip_all_tags( $new_instance['select14'] ) : '';
-		$instance['select15']   = isset( $new_instance['select15'] ) ? wp_strip_all_tags( $new_instance['select15'] ) : '';
+
+        /*updated the code to have it looped*/
+        $loop_start = 1;
+        $loop_end = 15;
+        for($x=$loop_start;$x<=$loop_end;$x++){
+            $instance['select'.$x]   = isset( $new_instance['select'.$x] ) ? wp_strip_all_tags( $new_instance['select'.$x] ) : '';
+        }
+
 		return $instance;
 	}
+
 	public function widget( $args, $instance ) {
 		extract( $args );
 		$title    = isset( $instance['title'] ) ? apply_filters( 'widget_title', $instance['title'] ) : '';
 		$select   = isset( $instance['select'] ) ? $instance['select'] : '';
-		$select2   = isset( $instance['select2'] ) ? $instance['select2'] : '';
-		$select3   = isset( $instance['select3'] ) ? $instance['select3'] : '';
-		$select4   = isset( $instance['select4'] ) ? $instance['select4'] : '';
-		$select5   = isset( $instance['select5'] ) ? $instance['select5'] : '';
-		$select6   = isset( $instance['select6'] ) ? $instance['select6'] : '';
-		$select7   = isset( $instance['select7'] ) ? $instance['select7'] : '';
-		$select8   = isset( $instance['select8'] ) ? $instance['select8'] : '';
-		$select09   = isset( $instance['select9'] ) ? $instance['select9'] : '';
-		$select10   = isset( $instance['select10'] ) ? $instance['select10'] : '';
-		$select11   = isset( $instance['select11'] ) ? $instance['select11'] : '';
-		$select12   = isset( $instance['select12'] ) ? $instance['select12'] : '';
-		$select13   = isset( $instance['select13'] ) ? $instance['select13'] : '';
-		$select14   = isset( $instance['select14'] ) ? $instance['select14'] : '';
-		$select15   = isset( $instance['select15'] ) ? $instance['select15'] : '';
+
+		/*updated the code to have it looped*/
+        $loop_start = 1;
+        $loop_end = 15;
+        $select_holder = array();
+        for($x=$loop_start;$x<=$loop_end;$x++){
+            $select_holder['select'.$x] = isset( $instance['select'.$x] ) ? $instance['select'.$x] : '';
+        }
+        extract($select_holder);
+
 		// WordPress core before_widget hook (always include )
 		echo '
 			'. $before_widget;
